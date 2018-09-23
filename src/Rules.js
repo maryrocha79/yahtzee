@@ -57,37 +57,59 @@ class SumDistro extends Rule {
 
 /** Check if full house (3-of-kind and 2-of-kind) */
 
+// class FullHouse extends Rule {
+//   evalRoll = dice => {
+//     if (this.freq(dice).includes(2) && this.freq(dice).includes(3))
+//       return this.score;
+//     else return 0;
+//   };
+// }
+
 class FullHouse extends Rule {
   evalRoll = dice => {
-    if (this.freq(dice).includes(2) && this.freq(dice).includes(3))
-      return this.score;
-    else return 0;
+    // are frequencies 2 and 3?
+    const freqs = this.freq(dice);
+    return freqs.includes(2) && freqs.includes(3) ? this.score : 0;
   };
 }
 
 /** Check for small straights. */
 
+// class SmallStraight extends Rule {
+//   evalRoll = dice => {
+//     if (
+//       (dice.includes(1) &&
+//         dice.includes(2) &&
+//         dice.includes(3) &&
+//         dice.includes(4)) ||
+//       (dice.includes(2) &&
+//         dice.includes(3) &&
+//         dice.includes(4) &&
+//         dice.includes(5)) ||
+//       (dice.includes(3) &&
+//         dice.includes(4) &&
+//         dice.includes(5) &&
+//         dice.includes(6))
+//     )
+//       return this.score;
+//     else return 0;
+//   };
+// }
 class SmallStraight extends Rule {
   evalRoll = dice => {
-    if (
-      (dice.includes(1) &&
-        dice.includes(2) &&
-        dice.includes(3) &&
-        dice.includes(4)) ||
-      (dice.includes(2) &&
-        dice.includes(3) &&
-        dice.includes(4) &&
-        dice.includes(5)) ||
-      (dice.includes(3) &&
-        dice.includes(4) &&
-        dice.includes(5) &&
-        dice.includes(6))
-    )
+    const d = new Set(dice);
+
+    // straight can be 234 + either 1 or 5
+    if (d.has(2) && d.has(3) && d.has(4) && (d.has(1) || d.has(5)))
       return this.score;
-    else return 0;
+
+    // or 345 + either 2 or 6
+    if (d.has(3) && d.has(4) && d.has(5) && (d.has(2) || d.has(6)))
+      return this.score;
+
+    return 0;
   };
 }
-
 /** Check for large straights. */
 
 class LargeStraight extends Rule {
