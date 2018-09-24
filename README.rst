@@ -17,9 +17,6 @@ Setup
 
      $ npm start
 
-There are two versions of this: an incomplete, buggy version and the 
-finished solution version in ``solution/``.
-
 The Game
 ========
 
